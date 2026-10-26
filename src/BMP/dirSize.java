@@ -40,8 +40,6 @@ public class dirSize {
 						// Imprimimos cada subcarpeta con su tamaño.
 						System.out
 								.println("- Subcarpeta " + file.getName() + " Tamaño: " + tamañoSubCarpeta + " bytes.");
-					} else {
-						System.out.println("No es una subcarpeta.");
 					}
 				}
 			}
