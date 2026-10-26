@@ -43,6 +43,9 @@ public class dirSize {
 					}
 				}
 			}
+
+			// --- ÚNICA ADICIÓN: Llamada a la parte 2 para generar el BMP ---
+			new BMP().generarBmpPorcentajes(carpeta, tamañoCarpeta);
 		}
 	}
 
