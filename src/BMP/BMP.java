@@ -15,11 +15,11 @@ public class BMP {
 			return;
 		}
 
+		// Filtramos
 		File[] subCarpetasArray = carpetaPadre.listFiles(pathname -> pathname.isDirectory());
 		if (subCarpetasArray == null || subCarpetasArray.length == 0) {
 			return;
 		}
-
 		List<File> subCarpetas = new ArrayList<>();
 		for (File f : subCarpetasArray) {
 			subCarpetas.add(f);
@@ -30,19 +30,19 @@ public class BMP {
 		for (int i = 0; i < subCarpetas.size(); i++) {
 			tamañosSub[i] = obtenerTamañoCarpeta(subCarpetas.get(i));
 		}
-
+		// Tamaño de la imagem
 		int ancho = 600;
 		int alto = 400;
+		// Tiene que ser multiplo de 4 o is no se raya
 		int tamañoFila = ((ancho * 3 + 3) / 4) * 4;
 		int tamañoPixelArray = tamañoFila * alto;
 		int tamañoFichero = 54 + tamañoPixelArray;
-
+		// Para que aparezca en el proyecto
 		File archivoSalida = new File(System.getProperty("user.dir"), "porcentajes_carpetas.bmp");
 
 		try (FileOutputStream fos = new FileOutputStream(archivoSalida);
 				BufferedOutputStream bos = new BufferedOutputStream(fos)) {
 
-			// Cabecera Bitmap File (14 bytes)
 			bos.write('B');
 			bos.write('M');
 			escribirEntero32bytes(bos, tamañoFichero);
@@ -62,6 +62,7 @@ public class BMP {
 			escribirEntero32bytes(bos, 0);
 			escribirEntero32bytes(bos, 0);
 
+			// Dibujar barras horizontales y fondo
 			for (int y = 0; y < alto; y++) {
 				int indiceBarra = -1;
 				if (tamañosSub.length > 0) {
@@ -110,13 +111,14 @@ public class BMP {
 				}
 			}
 
-			System.out.println("BMP generado con éxito en: " + archivoSalida.getAbsolutePath());
+			System.out.println("BMP generado con exito en: " + archivoSalida.getAbsolutePath());
 
 		} catch (IOException e) {
 			System.out.println("Error al generar el BMP: " + e.getMessage());
 		}
 	}
 
+// Tomamos el tamaño de la carpeta
 	private long obtenerTamañoCarpeta(File carpeta) {
 		if (carpeta == null || !carpeta.exists())
 			return 0;
